@@ -1,0 +1,21 @@
+.add-button {
+  background: rgb(89, 71, 255);
+  border-radius: 4px;
+  color: #fff;
+  font-family: Helvetica, Arial, sans-serif;
+  padding: 0.5rem 1rem;
+  position: static;
+  outline: 0;
+  border-color: white;
+  border-width: initial;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+}
+
+.add-button:active {
+  border-color: white;
+  border-width: 10;
+}
+
+.add-button:hover {
+  background: rgb(103, 86, 255);
+}
