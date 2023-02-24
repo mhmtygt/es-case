@@ -1,10 +1,10 @@
 import "../styles/input.css";
 
-export const Input = ({ label }) => {
+export const Input = ({ className, label, onChange, value }) => {
   return (
     <div>
-      <label for="title-input">{label} : </label>
-      <input className="title-input" id="title-input"></input>
+      <label>{label}: </label>
+      <input className={className} onChange={onChange} value={value}></input>
     </div>
   );
 };
