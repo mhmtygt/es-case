@@ -5,16 +5,17 @@ import { isEmpty } from "lodash";
 import { useSequenceTodos } from "../hooks/useSequenceTodos";
 import { useEffect } from "react";
 import { nanoid } from "nanoid";
+import { ListItemHeader } from "./ListItemHeader";
+import { selectTodoItems } from "../redux/slices/formSlice";
+
 export const List = () => {
-  //   const [sequencedTodoItems] = useSequenceTodos();
-  const formState = useSelector((state) => state.formState);
-  useEffect(() => {
-    console.log("List...");
-  });
+  const todoItems = useSelector(selectTodoItems);
+
   return (
     <div className="list">
-      {!isEmpty(formState.todoItems) ? (
-        formState.todoItems.map((todoItem, index) => {
+      {/* <ListItem /> */}
+      {!isEmpty(todoItems) ? (
+        todoItems.map((todoItem, index) => {
           return <ListItem key={index} todoItem={todoItem} />;
         })
       ) : (

@@ -71,6 +71,7 @@ export const Form = () => {
         onChange={handlePriority}
         value={priority}
         options={priorityOptions}
+        hiddenOption="Choose Priority"
       />
       <Button text="Add" onClick={handleAddClick} />
     </div>

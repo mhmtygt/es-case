@@ -4,35 +4,17 @@ import { Select } from "./Select";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedTodoItem, setTodoItems } from "../redux/slices/formSlice";
-import { useChangeListItem } from "../hooks/useChangeListItem";
 
 export const ListItem = ({ todoItem }) => {
   const priorityOptions = ["Urgent", "Important", "Normal"];
   const dispatch = useDispatch();
-  const formState = useSelector((state) => state.formState);
-
-  const [priority, setPriority] = useState(todoItem.priority);
-  //   const { todoItems, updated } = useChangeListItem(
-  //     priority,
-  //     todoItem.id,
-  //     todoItem
-  //   );
-  useEffect(() => {
-    console.log("render item...");
-  });
-  //   useEffect(() => {
-  //     console.log(todoItem.id);
-  //     if (updated) {
-  //       dispatch(setTodoItems(todoItems));
-  //     }
-  //   }, [priority]);
 
   const handleOnChange = (e) => {
-    // setPriority(e.target.value);
     dispatch(
       setSelectedTodoItem({ item: todoItem, newPriority: e.target.value })
     );
   };
+
   const handleClick = () => {
     //TODO:
   };
@@ -40,7 +22,7 @@ export const ListItem = ({ todoItem }) => {
   return (
     <div className="item">
       <div className="data-area">
-        <span className="data-label">{todoItem.id}</span>
+        <span className="data-label">{todoItem.title}</span>
       </div>
       <div className="select-area">
         <Select
