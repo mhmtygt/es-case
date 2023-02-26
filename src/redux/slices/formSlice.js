@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  todoItem: [],
+  todoItems: [],
+  sequence: "default",
 };
 
 export const formSlice = createSlice({
@@ -9,10 +10,16 @@ export const formSlice = createSlice({
   initialState,
   reducers: {
     setTodoItem: (state, action) => {
-      state.todoItem = [...state.todoItem, action.payload];
+      state.todoItems = [...state.todoItems, action.payload];
+    },
+    setTodoItems: (state, action) => {
+      state.todoItems = [...action.payload];
+    },
+    setSequence: (state, action) => {
+      state.sequence = action.payload;
     },
   },
 });
 
-export const { setTodoItem } = formSlice.actions;
+export const { setTodoItem, setTodoItems, setSequence } = formSlice.actions;
 export default formSlice.reducer;

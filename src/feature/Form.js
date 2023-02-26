@@ -1,77 +1,56 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { Select } from "../components/Select";
 import { setTodoItem } from "../redux/slices/formSlice";
+import { nanoid } from "nanoid";
 import "../styles/form.css";
 
 export const Form = () => {
   const dispatch = useDispatch();
-  const formState = useSelector((state) => state.todoItem);
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("Choose Priority");
 
-  const [isValidForm, setIsValidForm] = useState(false);
   const [isValidTitle, setIsValidTitle] = useState("default");
   const [isValidPriority, setIsValidPriority] = useState("default");
 
   const priorityOptions = ["Urgent", "Important", "Normal"];
 
-  //   useEffect(() => {
-  //     validateTitle();
-  //     validatePriority();
-  //   }, [title, priority]);
-
   const handleAddClick = () => {
     //TODO: separate validation
+    validateTitle(title);
+    validatePriority(priority);
 
-    console.log(isValidPriority);
-    console.log(isValidTitle);
-
-    // if (isValidTitle === "valid" && isValidPriority !== "valid") {
-    //   setPriority("Choose Priority");
-    //   setIsValidPriority("default");
-    // }
-
-    // if (isValidPriority === "valid" && isValidTitle !== "valid") {
-    //   setTitle("");
-    //   setIsValidTitle("default");
-    // }
-
-    // if (isValidTitle === "valid" && isValidPriority === "valid") {
-    //   dispatch(setTodoItem({ title: title, priority: priority }));
-    // }
+    if (isValidTitle === "valid" && isValidPriority === "valid") {
+      dispatch(setTodoItem({ id: nanoid(), title: title, priority: priority }));
+    }
   };
 
-  //   const validatePriority = () => {
-  //     if (priority === "Choose Priority") {
-  //       setIsValidPriority("inValid");
-  //     } else {
-  //       setIsValidPriority("valid");
-  //     }
-  //   };
-
-  //   const validateTitle = () => {
-  //     if (title.length > 255 || title === "") {
-  //       setIsValidTitle("inValid");
-  //     } else {
-  //       setIsValidTitle("valid");
-  //     }
-  //   };
-
-  const handlePriority = (e) => {
-    console.log(e.target.value);
-    setPriority(e.target.value);
+  const validatePriority = (priority) => {
+    if (priority === "Choose Priority") {
+      setIsValidPriority("inValid");
+    } else {
+      setIsValidPriority("valid");
+    }
   };
-  const handleTitle = (e) => {
-    console.log(e.target.value);
-    setTitle(e.target.value);
-    if (e.target.value.length > 255 || e.target.value === "") {
+
+  const validateTitle = (title) => {
+    if (title.length > 255 || title === "") {
       setIsValidTitle("inValid");
     } else {
       setIsValidTitle("valid");
     }
+  };
+
+  const handlePriority = (e) => {
+    setPriority(e.target.value);
+    validatePriority(e.target.value);
+  };
+
+  const handleTitle = (e) => {
+    setTitle(e.target.value);
+    validateTitle(e.target.value);
   };
 
   return (
