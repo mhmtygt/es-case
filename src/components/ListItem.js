@@ -2,26 +2,36 @@ import "../styles/listItem.css";
 import { ReactComponent as TrashIcon } from "../assets/trash-x.svg";
 import { Select } from "./Select";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setTodoItems } from "../redux/slices/formSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedTodoItem, setTodoItems } from "../redux/slices/formSlice";
 import { useChangeListItem } from "../hooks/useChangeListItem";
 
 export const ListItem = ({ todoItem }) => {
   const priorityOptions = ["Urgent", "Important", "Normal"];
-  const [id] = useState(todoItem.id);
   const dispatch = useDispatch();
+  const formState = useSelector((state) => state.formState);
 
-  const [priority, setPriority] = useState(null);
-  const { todoItems, updated } = useChangeListItem(priority, id, todoItem);
-
+  const [priority, setPriority] = useState(todoItem.priority);
+  //   const { todoItems, updated } = useChangeListItem(
+  //     priority,
+  //     todoItem.id,
+  //     todoItem
+  //   );
   useEffect(() => {
-    if (updated) {
-      dispatch(setTodoItems(todoItems));
-    }
-  }, [priority]);
+    console.log("render item...");
+  });
+  //   useEffect(() => {
+  //     console.log(todoItem.id);
+  //     if (updated) {
+  //       dispatch(setTodoItems(todoItems));
+  //     }
+  //   }, [priority]);
 
   const handleOnChange = (e) => {
-    setPriority(e.target.value);
+    // setPriority(e.target.value);
+    dispatch(
+      setSelectedTodoItem({ item: todoItem, newPriority: e.target.value })
+    );
   };
   const handleClick = () => {
     //TODO:

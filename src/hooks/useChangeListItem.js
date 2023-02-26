@@ -7,6 +7,7 @@ export const useChangeListItem = (priority, id, todoItem) => {
   let todoItems = [...formState.todoItems];
 
   useEffect(() => {
+    console.log(id);
     if (priority !== todoItem.priority) {
       const findChangedItem = (item) => item.id === id;
       const todoIndex = todoItems.findIndex(findChangedItem);

@@ -23,6 +23,8 @@ export const useSequenceTodos = () => {
   };
 
   useEffect(() => {
+    console.log("useSequenceTodos...");
+
     defaultSequence();
   }, [formState.sequence, formState.todoItems]);
 
