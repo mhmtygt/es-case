@@ -19,6 +19,26 @@ export const formSlice = createSlice({
     setTodoItem: (state, action) => {
       let withNewItem = [...state.todoItems, action.payload];
       state.todoItems = [...defaultSequence(withNewItem, state.sequence)];
+
+      if (state.priorityFilter !== "All" && state.searchKey === "") {
+        let withNewItem = [...state.todoItemsByPriorityFilter, action.payload];
+        state.todoItemsByPriorityFilter = [
+          ...filterTodoItemsForPriority(
+            [...defaultSequence(withNewItem, state.sequence)],
+            state.priorityFilter
+          ),
+        ];
+      }
+
+      //for search filter
+      if (state.priorityFilter === "All" && state.searchKey !== "") {
+        let withNewItem = [...state.todoItemsByTitle, action.payload];
+        if (action.payload.title.includes(state.searchKey)) {
+          state.todoItemsByTitle = [
+            ...defaultSequence(withNewItem, state.sequence),
+          ];
+        }
+      }
     },
     removeTodoItem: (state, action) => {
       state.todoItemToBeDeleted = action.payload;
