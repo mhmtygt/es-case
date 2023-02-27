@@ -3,7 +3,7 @@ import { ReactComponent as TrashIcon } from "../assets/trash-x.svg";
 import { Select } from "./Select";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedTodoItem } from "../redux/slices/formSlice";
+import { setSelectedTodoItem, removeTodoItem } from "../redux/slices/formSlice";
 
 export const ListItem = ({ todoItem }) => {
   const priorityOptions = ["Urgent", "Important", "Normal"];
@@ -17,6 +17,7 @@ export const ListItem = ({ todoItem }) => {
 
   const handleClick = () => {
     //TODO:
+    dispatch(removeTodoItem(todoItem));
   };
 
   return (

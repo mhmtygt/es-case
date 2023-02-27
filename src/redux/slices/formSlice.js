@@ -8,6 +8,7 @@ const initialState = {
   sequence: "Urgent to Normal",
   priorityFilter: "All",
   selectedTodoItem: null,
+  todoItemToBeDeleted: null,
   searchKey: "",
 };
 
@@ -18,6 +19,28 @@ export const formSlice = createSlice({
     setTodoItem: (state, action) => {
       let withNewItem = [...state.todoItems, action.payload];
       state.todoItems = [...defaultSequence(withNewItem, state.sequence)];
+    },
+    removeTodoItem: (state, action) => {
+      state.todoItemToBeDeleted = action.payload;
+
+      state.todoItems = [
+        ...removeTodoItemInArray([...state.todoItems], action.payload),
+      ];
+
+      if (state.searchKey !== "") {
+        state.todoItemsByTitle = [
+          ...removeTodoItemInArray([...state.todoItemsByTitle], action),
+        ];
+      }
+
+      if (state.priorityFilter !== "All") {
+        state.todoItemsByPriorityFilter = [
+          ...removeTodoItemInArray(
+            [...state.todoItemsByPriorityFilter],
+            action
+          ),
+        ];
+      }
     },
     setSequence: (state, action) => {
       state.sequence = action.payload;
@@ -141,6 +164,14 @@ export const formSlice = createSlice({
   },
 });
 
+const removeTodoItemInArray = (array, todoItem) => {
+  const findChangedItem = (item) => item.id === todoItem.id;
+  let todoIndex = array.findIndex(findChangedItem);
+  array.splice(todoIndex, 1);
+
+  return array;
+};
+
 const updateItemPriority = (todoItems, selectedTodoItem) => {
   const findChangedItem = (item) => item.id === selectedTodoItem.item.id;
   let cloneTodoItems = [...todoItems];
@@ -199,6 +230,7 @@ export const {
   setSelectedTodoItem,
   setSearchKey,
   setPriorityFilter,
+  removeTodoItem,
 } = formSlice.actions;
 
 export default formSlice.reducer;
