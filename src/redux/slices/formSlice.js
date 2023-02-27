@@ -4,7 +4,9 @@ import { isEmpty } from "lodash";
 const initialState = {
   todoItems: [],
   todoItemsByTitle: [],
+  todoItemsByPriorityFilter: [],
   sequence: "Urgent to Normal",
+  priorityFilter: "All",
   selectedTodoItem: null,
   searchKey: "",
 };
@@ -17,13 +19,11 @@ export const formSlice = createSlice({
       let withNewItem = [...state.todoItems, action.payload];
       state.todoItems = [...defaultSequence(withNewItem, state.sequence)];
     },
-    setTodoItems: (state, action) => {
-      state.todoItems = [...defaultSequence(action.payload, state.sequence)];
-    },
     setSequence: (state, action) => {
       state.sequence = action.payload;
       let orderedItemsWithByTitle = [];
       let orderedItems = [];
+
       if (!isEmpty(state.todoItemsByTitle)) {
         orderedItemsWithByTitle = [
           ...defaultSequence(state.todoItemsByTitle, state.sequence),
@@ -36,6 +36,26 @@ export const formSlice = createSlice({
         state.todoItems = [...orderedItems];
       }
     },
+    setPriorityFilter: (state, action) => {
+      state.priorityFilter = action.payload;
+
+      state.todoItemsByPriorityFilter = [
+        ...filterTodoItemsForPriority(
+          [...state.todoItems],
+          state.priorityFilter
+        ),
+      ];
+      if (state.searchKey !== "") {
+        state.todoItemsByPriorityFilter = [
+          ...filterTodoItemsForPriority(
+            [...state.todoItemsByTitle],
+            state.priorityFilter
+          ),
+        ];
+      }
+
+      console.log([...state.todoItemsByPriorityFilter]);
+    },
     setSearchKey: (state, action) => {
       state.searchKey = action.payload.trim();
       let cloneTodoItems = [...state.todoItems];
@@ -46,40 +66,93 @@ export const formSlice = createSlice({
           .includes(state.searchKey.trim().toLowerCase());
       });
 
-      state.todoItemsByTitle = [...filterbyTitle];
+      state.todoItemsByTitle = [
+        ...filterTodoItemsForPriority([...filterbyTitle], state.priorityFilter),
+      ];
+
+      if (state.searchKey === "") {
+        state.todoItemsByPriorityFilter = [
+          ...filterTodoItemsForPriority(
+            [...state.todoItems],
+            state.priorityFilter
+          ),
+        ];
+      } else {
+        let cloneTodoItems = [...state.todoItems];
+        const filterbyTitle = cloneTodoItems.filter((todoItem) => {
+          return todoItem.title
+            .trim()
+            .toLowerCase()
+            .includes(state.searchKey.trim().toLowerCase());
+        });
+
+        state.todoItemsByPriorityFilter = [
+          ...filterTodoItemsForPriority(
+            [...filterbyTitle],
+            state.priorityFilter
+          ),
+        ];
+      }
     },
     setSelectedTodoItem: (state, action) => {
       state.selectedTodoItem = action.payload;
-      const findChangedItem = (item) => item.id === action.payload.item.id;
-      let cloneTodoItems = [];
-      let todoIndex;
 
       if (!isEmpty(state.todoItemsByTitle)) {
-        cloneTodoItems = [...state.todoItemsByTitle];
-        todoIndex = cloneTodoItems.findIndex(findChangedItem);
-        cloneTodoItems.splice(todoIndex, 1, {
-          ...action.payload.item,
-          priority: action.payload.newPriority,
-        });
+        let todoItemsByTitleWithUpdatedPriority = updateItemPriority(
+          [...state.todoItemsByTitle],
+          state.selectedTodoItem
+        );
+
         state.todoItemsByTitle = [
-          ...defaultSequence(cloneTodoItems, state.sequence),
+          ...defaultSequence(
+            todoItemsByTitleWithUpdatedPriority,
+            state.sequence
+          ),
         ];
       }
 
-      cloneTodoItems = [...state.todoItems];
-      todoIndex = cloneTodoItems.findIndex(findChangedItem);
+      let todoItemsWithUpdatedPriority = updateItemPriority(
+        [...state.todoItems],
+        state.selectedTodoItem
+      );
 
-      cloneTodoItems.splice(todoIndex, 1, {
-        ...action.payload.item,
-        priority: action.payload.newPriority,
-      });
-      console.log(cloneTodoItems);
+      state.todoItems = [
+        ...defaultSequence(todoItemsWithUpdatedPriority, state.sequence),
+      ];
+      if (state.priorityFilter !== "All") {
+        let todoItemsByPriorityWithUpdatedPriority = updateItemPriority(
+          [...state.todoItemsByPriorityFilter],
+          state.selectedTodoItem
+        );
 
-      //TODO
-      state.todoItems = [...defaultSequence(cloneTodoItems, state.sequence)];
+        state.todoItemsByPriorityFilter = [
+          ...filterTodoItemsForPriority(
+            [
+              ...defaultSequence(
+                todoItemsByPriorityWithUpdatedPriority,
+                state.sequence
+              ),
+            ],
+            state.priorityFilter
+          ),
+        ];
+      }
     },
   },
 });
+
+const updateItemPriority = (todoItems, selectedTodoItem) => {
+  const findChangedItem = (item) => item.id === selectedTodoItem.item.id;
+  let cloneTodoItems = [...todoItems];
+  let todoIndex = cloneTodoItems.findIndex(findChangedItem);
+
+  cloneTodoItems.splice(todoIndex, 1, {
+    ...selectedTodoItem.item,
+    priority: selectedTodoItem.newPriority,
+  });
+
+  return cloneTodoItems;
+};
 
 const defaultSequence = (todoItems, sequence) => {
   if (!isEmpty(todoItems)) {
@@ -103,29 +176,29 @@ const defaultSequence = (todoItems, sequence) => {
   }
 };
 
-// const updateSelectedTodoItem = (todoItems, selectedItem) => {
-//   const todoIndex = todoItems.findIndex(
-//     (item) => item.id === selectedItem.item.id
-//   );
-
-//   return todoItems.splice(todoIndex, 1, {
-//     ...selectedItem.item,
-//     priority: selectedItem.newPriority,
-//   });
-// };
+const filterTodoItemsForPriority = (todoItems, selectedPriority) => {
+  if (selectedPriority === "All") return todoItems;
+  return todoItems.filter((todoItem) => {
+    return todoItem.priority === selectedPriority;
+  });
+};
 
 export const selectTodoItems = (state) => {
-  return state.formState.searchKey !== ""
-    ? state.formState.todoItemsByTitle
-    : state.formState.todoItems;
+  if (state.formState.priorityFilter === "All") {
+    return state.formState.searchKey !== ""
+      ? state.formState.todoItemsByTitle
+      : state.formState.todoItems;
+  } else {
+    return state.formState.todoItemsByPriorityFilter;
+  }
 };
 
 export const {
   setTodoItem,
-  setTodoItems,
   setSequence,
   setSelectedTodoItem,
   setSearchKey,
+  setPriorityFilter,
 } = formSlice.actions;
 
 export default formSlice.reducer;
