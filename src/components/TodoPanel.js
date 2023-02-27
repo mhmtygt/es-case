@@ -1,7 +1,5 @@
 import { List } from "./List";
-import "../styles/todoPanel.css";
 import { Select } from "./Select";
-import { ListItemHeader } from "./ListItemHeader";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setSequence,
@@ -10,6 +8,7 @@ import {
 } from "../redux/slices/formSlice";
 
 import "../styles/todoPanel.css";
+
 export const TodoPanel = () => {
   const formState = useSelector((state) => state.formState);
   const dispatch = useDispatch();
@@ -29,29 +28,28 @@ export const TodoPanel = () => {
   };
 
   return (
-    <div className="panel">
-      <div className="filter-area">
-        {/* <ListItemHeader /> */}
-        <div className="title-filter-area">
-          <div className="title-input-area">
+    <div className="todo-list-panel">
+      <div className="list-filter-area">
+        <div className="list-title-filter-area">
+          <div className="list-title-input-area">
             <input
               placeholder="Search by title..."
-              className="title-filter"
+              className="list-title-filter"
               onChange={handleSearchFilter}
             ></input>
           </div>
-          <div className="title-urgent-filter-area">
+          <div className="list-title-urgent-filter-area">
             <Select
-              className="priority-filter"
+              className="list-priority-filter"
               options={filterOptionsByPriority}
               onChange={handlePriorityFilter}
               value={formState.priorityFilter}
             />
           </div>
         </div>
-        <div className="second-filter-area">
+        <div className="list-second-filter-area">
           <Select
-            className="priority-filter"
+            className="list-priority-filter"
             options={filterOptionsByOrder}
             value={formState.sequence}
             onChange={handleOrderChange}

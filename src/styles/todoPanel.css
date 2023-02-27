@@ -1,64 +1,64 @@
-.panel{
-    width: 800px;
-    height: 300px;
+.todo-list-panel{
+    width: 100%;
+    height: 100%;
     display: grid;
     grid-template-rows: 1fr 6fr;
-    background-color: white;
 }
-
-.filter-area{
+  
+.list-filter-area{
     display: grid;
-    grid-template-columns: 5fr 2fr 1fr;
+    grid-template-columns: 5fr 2fr;
+    height: 50%;
+    align-self: center;
 }
 
-.title-filter-area{
+.list-title-filter-area{
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
 
-.title-input-area{
+.list-title-input-area{
     position: relative;
 }
 
-.title-urgent-filter-area{
+.list-title-urgent-filter-area{
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    /* border: 1px solid black; */
 }
 
-.second-filter-area{
+.list-second-filter-area{
     position: relative;
 }
 
-.priority-filter{
+.list-priority-filter{
     position: absolute;
     border: 0px;
     width: 100%;
     height: 100%;
+    font: 1em sans-serif;
+    padding-inline-start: 10px;
 }
-.priority-filter:hover{
-    background-color: rgb(181, 175, 175);
+.list-priority-filter:hover{
+    background-color: rgb(243, 237, 237);
 }
-.priority-filter:focus{
+.list-priority-filter:focus{
     outline: none;
 }
 
-.title-filter{
+.list-title-filter{
     position: absolute;
-    /* border: 1px solid black; */
     width: 100%;
-    height: 90%;
+    height: 95%;
     border: 0px;
     font: 1em sans-serif;
     padding-inline-start: 10px;
 }
-.title-filter:focus{
+.list-title-filter:focus{
     outline: none;
 }
 
 .list-area{
     overflow: scroll;
-    border: 1px solid black;
 }

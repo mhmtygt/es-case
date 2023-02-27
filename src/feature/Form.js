@@ -18,7 +18,6 @@ export const Form = () => {
   const priorityOptions = ["Urgent", "Important", "Normal"];
 
   const handleAddClick = () => {
-    //TODO: separate validation
     validateTitle(title);
     validatePriority(priority);
 
@@ -54,26 +53,37 @@ export const Form = () => {
   };
 
   return (
-    <div className="form-space">
-      <Input
-        className={
-          isValidTitle === "inValid" ? "title-input-not-valid" : "title-input"
-        }
-        label="Title"
-        onChange={handleTitle}
-        value={title}
-      />
-      <Select
-        className={
-          isValidPriority === "inValid" ? "priority-box-error" : "priority-box"
-        }
-        label="Priority"
-        onChange={handlePriority}
-        value={priority}
-        options={priorityOptions}
-        hiddenOption="Choose Priority"
-      />
-      <Button text="Add" onClick={handleAddClick} />
+    <div className="elements-area">
+      <div className="title-element-area">
+        <div className="title-input-area">
+          <Input
+            className={
+              isValidTitle === "inValid"
+                ? "title-input-not-valid"
+                : "title-input"
+            }
+            placeholder="Title..."
+            onChange={handleTitle}
+            value={title}
+          />
+        </div>
+        <div className="priority-select-area">
+          <Select
+            className={
+              isValidPriority === "inValid"
+                ? "priority-select-invalid"
+                : "priority-select"
+            }
+            onChange={handlePriority}
+            value={priority}
+            options={priorityOptions}
+            hiddenOption="Choose Priority"
+          />
+        </div>
+      </div>
+      <div className="add-button-area">
+        <Button text="Add" className="add-button" onClick={handleAddClick} />
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 .list{
     background-color: white;
     box-shadow: 0 10px 10px rgb(0 0 0 / 0.2);
-    padding: 5px;
+    padding: 15px;
+    border-radius: 10px;
     overflow: scroll;
 }

@@ -1,0 +1,31 @@
+.popup{
+    position: fixed;
+
+    left: 25%;
+    top: 40%;
+    z-index: 1;
+    width: 50%;
+
+    border: 1px solid black;
+    border-radius: 1em;
+
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    color: black;
+}
+
+.button-container{
+    margin-bottom: 0.5em;
+}
+
+.content-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

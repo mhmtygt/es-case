@@ -235,6 +235,7 @@ const filterTodoItemsForPriority = (todoItems, selectedPriority) => {
 };
 
 export const selectTodoItems = (state) => {
+  localStorage.setItem("state", JSON.stringify(state.formState));
   if (state.formState.priorityFilter === "All") {
     return state.formState.searchKey !== ""
       ? state.formState.todoItemsByTitle
