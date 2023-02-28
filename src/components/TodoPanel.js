@@ -57,9 +57,7 @@ export const TodoPanel = () => {
           />
         </div>
       </div>
-      <div className="list-area">
-        <List />
-      </div>
+      <List />
     </div>
   );
 };
