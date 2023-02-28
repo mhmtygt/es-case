@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Button } from "../components/Button";
-import { Input } from "../components/Input";
-import { Select } from "../components/Select";
+import { Button } from "./Button";
+import { Input } from "./Input";
+import { Select } from "./Select";
 import { setTodoItem } from "../redux/slices/formSlice";
 import { nanoid } from "nanoid";
 import "../styles/form.css";

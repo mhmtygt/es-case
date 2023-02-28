@@ -1,5 +1,5 @@
 import { TodoPanel } from "./components/TodoPanel";
-import { Form } from "./feature/Form";
+import { Form } from "./components/Form";
 
 import "./styles/layout.css";
 
