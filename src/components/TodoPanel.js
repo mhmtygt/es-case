@@ -8,6 +8,7 @@ import {
 } from "../redux/slices/formSlice";
 
 import "../styles/todoPanel.css";
+import { Input } from "./Input";
 
 export const TodoPanel = () => {
   const formState = useSelector((state) => state.formState);
@@ -32,11 +33,11 @@ export const TodoPanel = () => {
       <div className="list-filter-area">
         <div className="list-title-filter-area">
           <div className="list-title-input-area">
-            <input
+            <Input
               placeholder="Search by title..."
               className="list-title-filter"
               onChange={handleSearchFilter}
-            ></input>
+            />
           </div>
           <div className="list-title-urgent-filter-area">
             <Select

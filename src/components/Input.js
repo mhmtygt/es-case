@@ -1,6 +1,4 @@
-import "../styles/input.css";
-
-export const Input = ({ className, label, onChange, value, placeholder }) => {
+export const Input = ({ className, onChange, value, placeholder }) => {
   return (
     <div>
       <input

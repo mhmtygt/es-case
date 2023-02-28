@@ -7,8 +7,8 @@ export const Popup = ({ onAccept, onDiscard }) => {
         <h1>Remove Todo Item?</h1>
       </div>
       <div className="button-container">
-        <button onClick={onAccept}> Yes </button>
-        <button onClick={onDiscard}> No </button>
+        <button onClick={onAccept}>Yes</button>
+        <button onClick={onDiscard}>No</button>
       </div>
     </div>
   );

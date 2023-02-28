@@ -1,11 +1,19 @@
 .item{
     display: grid;
     grid-template-columns: 5fr 2fr 1fr;
+    background: white;
     box-shadow: 0 10px 10px rgb(0 0 0 / 0.2);
     border-radius: 10px;
     position: relative;
-    padding: 5px;
-    margin: 4px 0 0 0;
+    padding: 10px;
+    margin: 10px 0 0 0;
+}
+
+.red{
+    background-color: rgb(205, 109, 109);
+}
+.orange{
+    background-color: orange;
 }
 
 .select-area{
@@ -29,41 +37,53 @@
 }
 
 .data-label{
-    color:black;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    padding: 5px;
-    font: 1em sans-serif;
-    padding-inline-start: 10px;
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   padding: 5px;
 }
 
 .trash-button{
     width: 100%;
     height: 100%;
-    background-color: white;
     border: 0px;
+}
+.trash-button:hover{
+    background-color: rgb(243, 237, 237);
+    border-radius: 4px;
+
+}
+.trash-button:active{
+    background-color: rgb(136, 133, 133);
 }
 
 .priority-options{
     position: absolute;
+    font: 1em sans-serif;
     border: 0px;
     width: 100%;
     height: 100%;
-    font: 1em sans-serif;
-    padding-inline-start: 10px;
 }
 .priority-options:hover{
     background-color: rgb(243, 237, 237);
+    border-radius: 4px;
 }
 .priority-options:focus{
     outline: none;
 }
 
 .trash{
-    color:red
+    color: red;
 }
 
-/* .trash:hover{
-    background-color: rgb(243, 237, 237);
-} */
+@media screen and (max-width: 600px) {
+    .priority-options{
+      font: 0.6em sans-serif;
+    }
+    .data-label{
+      font: 0.8em sans-serif;
+    }
+    .trash{
+        width: 15px;
+    }
+}

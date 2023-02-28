@@ -24,6 +24,7 @@
   border: 0px;
   font: 1em sans-serif;
   padding-inline-start: 10px;
+  border-radius: 4px;
 }
 .title-input:focus{
   outline: none;
@@ -64,13 +65,12 @@
   border: 1px solid red;
   position: absolute;
   width: 93%;
-  height: 95%;
+  height: 92%;
   font: 1em sans-serif;
   padding-inline-start: 10px;
 }
 
 .add-button-area{
-  /* ADD BUTTON area */
   position: relative;
 }
 
@@ -81,4 +81,29 @@
 }
 .add-button:hover{
   background-color: rgb(181, 175, 175);
+}
+.add-button:active{
+  background-color: rgb(181, 175, 175);
+}
+
+@media screen and (max-width: 600px) {
+  .title-input{
+    font: 0.7em sans-serif;
+    width: 86%;
+  }
+
+  .priority-select{
+    font: 0.7em sans-serif;
+    width: 90%;
+  }
+  
+  .priority-select-invalid{
+    font: 0.7em sans-serif;
+    width: 90%;
+  }
+
+  .title-input-not-valid {
+    font: 0.7em sans-serif;
+    width: 86%;
+  }
 }

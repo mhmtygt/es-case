@@ -1,5 +1,3 @@
-import "../styles/select.css";
-
 export const Select = ({
   className,
   label,
@@ -11,7 +9,13 @@ export const Select = ({
   return (
     <div>
       {label && <label>{label}: </label>}
-      <select className={className} onChange={onChange} value={value}>
+      <select
+        name="select"
+        id="select"
+        className={className}
+        onChange={onChange}
+        value={value}
+      >
         {hiddenOption && (
           <option selected disabled hidden>
             {hiddenOption}
