@@ -8,6 +8,7 @@ import { nanoid } from "nanoid";
 import "../styles/form.css";
 
 export const Form = () => {
+  let letters = /^[0-9a-zA-Z]+$/;
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("Choose Priority");
@@ -35,7 +36,7 @@ export const Form = () => {
   };
 
   const validateTitle = (title) => {
-    if (title.length > 255 || title === "") {
+    if (title.length > 255 || title === "" || !title.match(letters)) {
       setIsValidTitle("inValid");
     } else {
       setIsValidTitle("valid");
